@@ -1,0 +1,4 @@
+For running script used Python 3.
+Script uses linux application 'iw'. You must run script under sudo:
+
+sudo python3 wifi_scan.py
