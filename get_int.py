@@ -6,7 +6,6 @@ def get_int():
 
 	for lines in out_iw.split('\n'):
 		if "ESSID:" in lines:
-#			print(lines.split('    ')[0])
 			return lines.split('    ')[0]
 			
 print(get_int())

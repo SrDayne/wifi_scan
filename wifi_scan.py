@@ -4,8 +4,13 @@ ssid_base = open('ssid_base.txt', 'w')
 signal_base = open('signal_base.txt', 'w')
 sort_signal_base = open('sort_signal.txt', 'w')
 
-process = subprocess.Popen(['iw', 'wlp5s0', 'scan'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-out, err = process.communicate()
+def get_int():
+	iw_out = subprocess.Popen(['iwconfig'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+	out_iw, err_iw = iw_out.communicate()
+
+	for lines in out_iw.split('\n'):
+		if "ESSID:" in lines:
+			return lines.split('    ')[0]
 
 def ssid():
 	for lines in out.split('\t'):
@@ -22,6 +27,12 @@ def signal():
 			signal_base.write(signal + '\n')
 #			print(signal)
 	signal_base.close()
+
+interface = get_int()
+
+process = subprocess.Popen(['iw', '%s' % interface , 'scan'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+out, err = process.communicate()
+
 ssid()
 signal()
 
